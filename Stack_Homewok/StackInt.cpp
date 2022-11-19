@@ -2,27 +2,27 @@
 
 using namespace std;
 
-class cStackInt
+template<typename T> class cStack 
 {
 private:
-    int *arr;
+    T *arr;
     int top;
     int count;
 
 public:
-    void push(int val);
-    int pop();
+    void push(T val);
+    T pop();
     bool pos(int val);
     void hm_elem();
     void sawTop();
 
-    cStackInt();
-    cStackInt(int size);
-    cStackInt(const cStackInt & src_stack);
-    ~cStackInt();
+    cStack();
+    cStack(int size);
+    cStack(const cStack & src_stack);
+    ~cStack();
 };
 
-bool cStackInt::pos(int val){
+bool pos(int val){
     if (val > 0)
     {
         return true;
@@ -31,30 +31,30 @@ bool cStackInt::pos(int val){
 }
 
 
-cStackInt::cStackInt(){
-    arr = new int[10];
+template<typename T> cStack<T>::cStack(){
+    arr = new T[10];
     top = 0;
     count = 10;
 }
 
-cStackInt::~cStackInt(){
+template<typename T> cStack<T>::~cStack(){
     delete[] arr;
 }
 
-cStackInt::cStackInt(int size){
-    if (pos(size))
-    {
-        arr = new int[size];
-        top = -1;
-        count = size;
-    }
-    else
-    {
-        cout << "Input number < 0 or 0\n";
-    }
+template<typename T> cStack<T>::cStack(int size){
+        if (pos(size))
+        {
+            arr = new T[size];
+            top = -1;
+            count = size;
+        }
+        else
+        {
+            cout << "Size of Stack 0 or < 0" << endl;
+        }
 }
 
-void cStackInt::push(int val){
+template<typename T> void cStack<T>::push(T val){
     if (count)
     {
         top++;
@@ -67,10 +67,10 @@ void cStackInt::push(int val){
     }
 }
 
-int cStackInt::pop(){
+template<typename T>T cStack<T>::pop(){
     if (top != -1)
     {
-        int buf = arr[top];
+        T buf = arr[top];
         count++;
         top--;
         return buf;
@@ -82,9 +82,27 @@ int cStackInt::pop(){
     }
 }
 
-void cStackInt::hm_elem(){
+template<typename T> void cStack<T>::hm_elem(){
     cout << "Items left: " << count << endl;
 }
-void cStackInt::sawTop(){
+template<typename T> void cStack<T>::sawTop(){
     cout << "Top Element: " << arr[top] << endl;
+}
+
+
+int main()
+{
+    cStack<float> stack_of_int(10);
+    stack_of_int.push(1.214);
+    stack_of_int.push(1.215);
+    stack_of_int.push(1.216);
+    stack_of_int.push(1.217);
+    stack_of_int.push(1.214);
+    
+
+    stack_of_int.sawTop();
+    stack_of_int.pop();
+    stack_of_int.sawTop();
+    
+    return 0;
 }
